@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Docker</title>
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+		<link rel="stylesheet" href="css/overrides.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1 style="color:#ffcc00;font-size:72px;color:#0000ff;">What is Docker?</h1>
+					<img width="427px" data-src="images/docker.png" alt="docker logo">
+				</section>
+
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Docker is a tool that helps us build, deploy and run applications within isolated environments called <span style="color:#fff;">Containers.</span></li>
+						<li>Containers allow us to package up an application with all the parts and tools it needs.</li>
+						<li>Once packaged, we can rest assured that the application will run on any other Linux machine.</li>
+					</ul>	
+				</section>
+
+				<section>
+					<ul style="color:#5959ff;">
+					<li>Currently, containers can be built to run in either a <span style="color:#fff;">Linux or a Windows operating system.</span></li>
+					<li>Docker Containers are similar to VMs in that they both create <span style="color:#fff;">isolated environments.</span></li>
+				</section>
+
+				<section>
+					<h3 style="color:#9ea80f;">
+						What is a VM?
+					</h3>
+				</section>
+
+				<section>
+					<ul style="color:#5959ff;">
+						<li>A <span style="color:#fff;">VM or Virtual Machine</span> is an emulation of a computer system; it imitates dedicated hardware.</li>
+						<li>Like Docker, the virtual machine is <span style="color:#fff;">sandboxed from the rest of the system</span>, meaning that the software inside a virtual machine can’t escape or tamper with the computer itself.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<img style="float:right;margin-left:10px;" width="427px" data-src="images/vm-diagram.png" alt="vm diagram">
+						<li>However, unlike Docker, a <span style="color:#fff;">hypervisor or virtual machine monitor (VMM)</span> sits between the hardware and the VM and is necessary to virtualize the server.</li>
+						<li>This hypervisor creates and runs virtual machines, and <span style="color:#fff;">each VM has its own full Guest OS and kernel.</span></li>
+					</ul>
+				</section>
+
+				<section>
+					<h3 style="color:#9ea80f;">
+						What is the Kernel?
+					</h3>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>The kernel is a running software process that <span style="color:#fff;">governs access between the programs that run on a computer and the physical hardware it is built of.</span></li>
+						<li>Every OS has a kernel</li>
+						<li>When an application wants to save a file to the hard drive, the kernel is responsible for taking that file and persisting it to the hard disk.</li> 
+					</ul>
+				</section>	
+				<section>
+					<ul style="color:#5959ff;">
+						<p style="color:#fff;">VMs vs Docker:</p>
+						<img style="float:right" width="427px" data-src="images/docker-diagram.png" alt="docker diagram">
+						<li>Unlike VMs, Docker allows applications to <span style="color:#fff;">share the same Linux kernel as the system they're running on.</span></li>
+						<li>It then allocates different segments of hard disk space and CPU resources when each isolated environment or container is created.</li>
+						
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Therefore, unlike VMs, Docker Containers <span style="color:#fff;">do not create an entire virtual operating system.</span></li>
+						<li>Since VMs need to boot a full OS, starting 100 VMs would take much longer than starting the same number of containers that can do this work in subsecond time.</li>
+						<li>Docker accomplishes this by using <span style="color:#fff;">layers and caching,</span> which we will see more of a bit of later.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Containers thus use far <span style="color:#fff;">fewer resources</span></li>
+						<li>They can also be <span style="color:#fff;">spun up and down far more quickly</span> and with <span style="color:#fff;">less overhead</span></li>
+						<li>This allows for a <span style="color:#fff;">significant performance boost</span></li>
+					</ul>
+				</section>
+				<section>
+					<h3 style="color:#9ea80f;">
+						Downloading Docker
+					</h3>
+				</section>	
+				<section>
+					<ul style="color:#5959ff;">
+						<li>To work in Docker we will need to download<br />
+							<span style="color:#fff;">Docker Community Edition (CE)</span> from the website.</li>
+						<li>We can do this by going to the<br /> 
+							<span style="color:#9ea80f;">Docker Docs, https://docs.docker.com</span></li>
+						<li>Once installed, we can check for docker by typing<br /> 
+							<span style="color:#fff;">docker version</span> in terminal.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<p style="color:#fff;">We are now ready to:</p>
+						<li>Use the Docker CLI and Server tools in terminal.</li>
+						<li>Create a Dockerfile.
+						<li>And add it to a project to <span style="color:#fff;">Dockerize</span> it.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<p style="color:#fff;">The Docker CLI Tool</p>
+						<li>When we download the Docker CE (Community Edition) package, we get a <span style="color:#fff;">CLI utility, called the Docker CLI</span></li>
+						<li>We can use this Docker CLI to build and run a Docker project.</li>
+					</ul>	
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<p style="color:#fff;">The Docker Server</p>	
+						<li>We can use the Docker CLI to issue commands and send them to the <span style="color:#fff;">Docker Server.</span></li>
+						<li>The Docker Server or Docker Daemon in turn does the work of executing these commands.</li>
+						<li>It creates images, runs containers, maps ports, etc.</li>
+						<li>In other words, <span style="color:#fff;">we use the Docker CLI to communicate with the Docker Server.</span></li>
+					</ul>
+				</section>
+				<section>
+					<h3 style="color:#9ea80f;">
+						The Dockerfile
+					</h3>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>The Dockerfile is a file that contains a <span style="color:#fff;">list of instructions</span> to set up a container.</li>
+						<li>These are commands a user could successively call on the command line to assemble a project if they were manually creating the project.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Dockerfiles can be created from scratch or they can be found on <span style="color:#fff;">Docker Hub.</span></li>
+						<li>The Dockerfile should be added to the root of the project.</li>
+						<li>Dockerfiles can be used as parent images to provide a basic framework for other dockerfiles.</li>
+					</ul>
+				</section>
+				<section>
+					<h3 style="color:#9ea80f;">
+						What is Docker Hub?
+					</h3>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>One of the greatest advantages of Docker is that it is <span style="color:#fff;">open source.</span></li>
+						<li>Docker has its own repository/Dockerfile registry at <span style="color:#fff;">Docker Hub</span></li>
+						<li>It is located at: <span style="color:#9ea80f;">https://hub.docker.com</span></li>
+					</ul>
+				</section>		
+				<section>
+					<ul style="color:#5959ff;">
+						<p style="color:#fff;">Docker Hub is a cloud-based registry service that allows us to:</p>
+						<li>Link to code repositories.</li> 
+						<li>Build our images and test them.</li> 
+						<li>Store manually pushed images.</li> 
+						<li>And link to Docker Cloud so we can deploy images to our hosts.</li> 
+					</ul>
+				</section>
+				
+				<section>
+					<ul style="color:#5959ff;">
+						<p style="color:#fff;">It provides a centralized resource for:</p> 
+						<li>Container image discovery.</li>
+						<li>Distribution and change management.</li>
+						<li>User and team collaboration.</li>
+						<li>And workflow automation throughout the development pipeline.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>We can use any of the Dockerfiles in the<br />
+							Docker Hub repo to build our project.</li>
+						<li>Or we can create our own Dockerfile.</li>
+						<li>And we can push it to the Docker Hub for<br />
+							others to use if we want to make it public.</li>
+					</ul>	
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>We'll start out by using one of these readily available Dockerfiles as an example.</li>
+						<li>If we search for <span style="color:#9ea80f;">nginx,</span> we should be able to find multiple repositories for nginx dockerfiles.</li>
+						<li>We can use one of these but since they are out of the box solutions, we might want to eventually build our own.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Once we have located or created a Dockerfile we can build
+							a <span style="color:#fff;">Docker Image</span></li>
+						<li>To do this we can either <span style="color:#fff;">pull an image from an existing Dockerfile on Docker Hub:</span>
+						<span style="color:#9ea80f;">docker pull nginx:latest</span></li>
+						<li>Or we can use the CLI to run commands and build an image from our own Dockerfile.</li> 
+					</ul>
+				</section>
+				<section>
+						<h3 style="color:#9ea80f;">
+							What is a Docker Image?
+						</h3>
+				</Section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>A <span style="color:#fff;">Docker Image</span> is an inert snapshot of a docker container.</li>
+						<li>We can view a list of local Docker images by running <span style="color:#9ea80f;">docker images.</span></li>
+						<li>Each image consists of <span style="color:#fff;">multiple read-only layers, each of which represents a Dockerfile instruction.</span></li>
+					</ul>
+				</section>
+				<section>
+						<ul style="color:#5959ff;">
+							<li><span style="color:#fff;">Images are immutable.</span> If any changes need to be made to the configuration of an image (and/or if changes need to be made to the resulting container), the image needs to be rebuilt from scratch after editing the Dockerfile’s instructions.</li>
+						</ul>
+					</section>
+				<section>
+					<h3 style="color:#9ea80f;">
+						Creating a Docker Container
+					</h3>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Once we have pulled or built a Docker Image,<br />
+							we can <span style="color:#fff;">run</span> it to create the Docker Container.</li>
+						<li>We can do this by executing the <span style="color:#9ea80f;">docker run</span> command.</li> 
+						<li>We can give the docker run command <span style="color:#fff;">various flags.</span></li>
+					</ul>
+				</section>	
+				<section>
+						<ul style="color:#5959ff;">
+							<p style="color:#fff;">Some flags include:</p>
+							<li><span style="color:#fff;">-i</span> for interactive</li>	
+							<li><span style="color:#fff;">-t</span> for an identifiable tagname</li>
+							<li><span style="color:#fff;">-p</span> for port</li>
+							<li><span style="color:#fff;">-d</span> for detached mode</li>
+							<li><span style="color:#fff;">--name</span> gives the container a name</li>
+						</ul>
+					</section>	
+				<section>
+					<ul style="color:#5959ff;">
+						<p style="color:#9ea80f;">docker run --name my-nginx -p 3000:80 nginx:latest</p>
+						<p>will run the command on port 3000 in the foreground</p><br />
+						<p style="color:#9ea80f;">docker run --name my-nginx -d -p 3000:80 nginx:latest</p>
+						<p>will run it in detached mode, on port 3000 in the background</p> 
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>We can now navigate to <span style="color:#9ea80f;">localhost:3000</span><br />
+							to see that our container is up and running.</li>
+						<li>We can also view our running containers<br />
+							by entering <span style="color:#9ea80f;">docker ps</span> in terminal.</li>
+						<li>To see all containers, we can run <span style="color:#9ea80f;">docker ps -a</span></li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Once a container is created, we can <span style="color:#fff;">start</span> and <span style="color:#fff;">stop</span> it by running <span style="color:#9ea80f;">docker start my-nginx</span> and <span style="color:#9ea80f;">docker stop my-nginx.</li>
+						<li>A <span style="color:#fff;">container</span> can be removed by typing<br />
+							<span style="color:#9ea80f;">docker rm my-nginx.</span></li>
+						<li>An <span style="color:#fff;">image</span> can be removed by typing<br />
+							<span style="color:#9ea80f;">docker rmi nginx:latest.</span></li>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li><span style="color:#fff;">We can also use this process to create<br />
+							a container from our very own Dockerfile.</span></li>
+						<li>Here is a Dockerfile I used for an Elixir-Phoenix-React project</li>
+						<li>The first line in a Dockerfile is always the <span style="color:#fff;">FROM</span> instruction.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>This <span style="color:#fff;">FROM</span> instruction uses another Dockerfile as the <span style="color:#fff;">base instruction.</span></li>
+						<li>Note that I did not use the <span style="color:#fff;">Elixir:latest</span> base image. This was to avoid version changes and subsequent incompatibilities when creating containers in the future.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>As we can see, the <span style="color:#fff;">latest version of Elixir on Docker Hub is 1.7.4, which would be the version pulled</span> if we set the FROM line to latest, not 1.7.1 as is the case in our image.</li>
+						<li>Also to note is that some of the more lightweight container versions like <span style="color:#fff;">Alpine</span> will forgo utilities such as <span style="color:#fff;">Bash</span> and include only the bare essentials in order to keep the size to a minimum.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Other lines in this Dockerfile include installing<br />
+							<span style="color:#fff;">Elixir, Phoenix and React.</span></li>
+						<li>And dependencies required by these programs,<br />
+							<span style="color:#fff;">e.g. Node.</span></li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>They also includes lines responsible for the installation of Linux dependencies,</li>
+						<li>Creation of a working directory and cding into it,</li>
+						<li>Exposing port 4000,</li>
+						<li>And finally a CMD or Entrypoint line.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<p style="color:#9ea80f;">CMD ["mix", "phx.server"]</p>
+						<li>This final command here <span style="color:#fff;">tells Elixir's Mix utility to run a server.</span></li>
+						<li>Either a CMD or Entrypoint instruction is required as the last line of a Dockerfile.</li>
+					</ul>
+				</section>
+				<section>
+					<h3 style="color:#9ea80f;">
+						Are we ready to build our container yet?
+					</h3>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Before we build our container, we need to set up things like our databases.</li>
+						<li>And an important point to keep in mind while we<br />configure our files is that containers are <span style="color:#fff;">stateless.</span></li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>This is why we will not be putting data directly<br />in our containers.</li> 
+						<li>We'll see how data outside our container can <br />
+							be mapped into our container with the help<br />
+							of <span style="color:#fff;">volumes.</span></li>
+					</ul>
+				</section>
+				<section>
+					<h3 style="color:#9ea80f;">
+						What are Volumes?
+					</h3>	
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Volumes are the preferred way to persist data in Docker containers and services.</li>
+						<img style="display: block;
+						margin: 0 auto;" width="600px" data-src="images/volumes.png" alt="volumes">
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>By using volumes, we tell Docker that whatever is included within the specified files in our local project should be continuously copied, mapped to and synced with an allocated directory in our container.</li> 
+						<li>Volumes are managed by Docker and are isolated from the core functionality of the host machine.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>So how do we set up our Postgres Database,</li>
+						<li>Add data to our tables, and</li>
+						<li>Set up volumes in order to add data to our containers?</li>
+						<li>We'll use a <span style="color:#fff;">Docker Compose file</span> to do this.</li>
+					</ul>
+				</section>
+				<section>
+					<h3 style="color:#9ea80f;">
+						What is the Docker Compose file?
+					</h3>	
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>It is a yml file that specifies all the dependencies that our app will need to run.</li>
+						<li>It includes the <span style="color:#fff;">app</span> and <span style="color:#fff;">db</span> services.</li>
+						<li>Also we can now set our <span style="color:#fff;">port</span> in here.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>The <span style="color:#fff;">volumes</span> line says that everything in our local <span style="color:#fff;">src</span> folder will be mapped to the <span style="color:#fff;">app</span> folder in our container.</li>
+						<li>We supply our <span style="color:#fff;">app</span> with <span style="color:#fff;">login credentials</span> in order to connect to the <span style="color:#fff;">db.</span></li>
+						<li>We also <span style="color:#fff;">tell our app that it depends on the db.</span> This line ensures that the db container will be started <span style="color:#fff;">before</span> the app container.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Here we can see that the db service is created using <span style="color:#fff;">Postgres 10 as a base image.</span></li>
+						<li>And we can see the path to where the db data will be stored.</li>
+					</ul>
+				</section>
+				<section>
+					<h3 style="color:#9ea80f;">
+						Creating and Running<br />our Containers
+					</h3>	
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Instead of using <span style="color:#9ea80f;">docker pull</span> we can now run<br />
+							<span style="color:#9ea80f;">docker build -t my-demo . </span>
+							<br />in the directory that contains our Dockerfile<br />
+							in order to build our image.</li>
+						<li>The Docker daemon runs the instructions in the Dockerfile one-by-one.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Each instruction is run independently,<br />
+							and causes a new image to be created.</li>
+						<li>Whenever possible, Docker will re-use<br />
+							the intermediate images (cache) to<br />
+							accelerate the docker build process.</li> 
+						<li>This is indicated by the <span style="color:#fff;">Using cache</span><br />
+							message in the console output.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>We can check our images now by running <span style="color:#9ea80f;"><br />
+							docker images,</span> and we will see our newly created image.</li>
+						<li>We can now finally build our containers by running <span style="color:#9ea80f;"><br />
+							docker-compose build.</span></li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Our app will require some Elixir, Postgres and Node setup. We'll run:<br />
+							<span style="color:#9ea80f;line-height:80px;">./mix deps.get</span><br />
+							<span style="color:#9ea80f;line-height:80px;">./mix ecto.create</span> and<br />
+							<span style="color:#9ea80f;line-height:80px;">cd src/assets && npm install</span>
+							<br /><span style="color:#ffcc00">***(why can't we include and auto run these in the Dockerfile? do some research)</span>
+						</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>Finally we'll run <span style="color:#9ea80f;">docker-compose up</span> to start our services.</li>
+						<li>And now we can navigate to <span style="color:#9ea80f;">http://localhost:4000</span> to view our project.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>We can also log into our container by running <span style="color:#9ea80f;">docker exec -it my-demo_app_1 /bin/bash</span> as <span style="color:#fff;">Bash</span> is included as one of our utilities.</li>
+						<li>Once logged in, we can look for the app folder in our container, where all our local files were being mapped per our Docker Compose file.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li>We can stop our containers by running<br />
+						<span style="color:#9ea80f;">docker stop my-demo_app_1</span> and<br />
+						<span style="color:#9ea80f;">docker stop my-demo_db_1</span></li>
+					</ul>
+				</section>	
+				<section>
+					<h3 style="color:#9ea80f;">
+						Some benefits of Docker
+					</h3>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<p style="color:#fff;">Allocation of System Resources</p>
+						<li>Docker containers allow for greater control of system resources.</li>
+						<li>Because containers are isolated from the system, they can be assigned greater or less amounts of these resources when necessary.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<p style="color:#fff;">Portability</p>
+						<li>Docker containers enable portability - a docker container will run on any machine that supports<br />the container's runtime environment.</li>
+						<li>Portability is enhanced by the fact that all the dependencies of an application are typically delivered in the same container.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<p style="color:#fff;">Ease of Use across Distributed Teams</p>
+						<li>With Docker we can be assured that the same versions of every tool and program are running within the containers of all members of a<br />distributed team.</li> 
+						<li>These members no longer need to have a certain version of Postgres installed or run tools like RVM or NVM to be in sync with every other member.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<p style="color:#fff;">Composability</p>
+						<li>Docker containers promote composability - we can build an application with multiple different containers running different <span style="color:#fff;">services,</span>
+							resulting in an application that is built from many easily-changed parts. This is known as the <span style="color:#fff;">Microservices Model.</span></li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<p style="color:#fff;">Orchestration and Scaling</p>
+						<li>Docker containers ease orchestration and scaling - containers can be used to scale an application across clusters of systems, and to ramp services up or down to meet spikes in demand or to conserve resources.</li>
+						<li><span style="color:#fff;">Google's Kubernetes</span> is probably the most well-known system for automating how containers are deployed, scaled, connected together, load-balanced and managed.</li>
+					</ul>
+				</section>
+				<section>
+					<ul style="color:#5959ff;">
+						<li><span style="color:#fff;">Docker Swarm, Mesos and Nomad</span> are some of the other <span style="color:#fff;">COEs or Container Orchestration Engines.</span></li>
+						<li>Finally, as mentioned before, <span style="color:#fff;">Docker is open source.</span></li>
+						<li>This is important because continual contributions are being made to Docker that help improve the technology.</li>
+					</ul>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
