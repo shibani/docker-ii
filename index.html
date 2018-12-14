@@ -46,8 +46,14 @@
 				<section>
 					<ul style="color:#5959ff;">
 						<li>Docker is a tool that helps us build, deploy and run applications within isolated environments called <span style="color:#fff;">Containers.</span></li>
+						<li>This presentation will give us a brief overview of the different terms used in Docker and how they fit together.</li>
+					</ul>	
+				</section>
+
+				<section>
+					<ul style="color:#5959ff;">
 						<li>Containers allow us to package up an application with all the parts and tools it needs.</li>
-						<li>Once packaged, we can rest assured that the application will run on any other Linux machine.</li>
+						<li>Once packaged, we can rest assured that our application will run on any other <span style="color:#fff;">Linux</span> machine.</li>
 					</ul>	
 				</section>
 
@@ -94,7 +100,7 @@
 						<p style="color:#fff;">VMs vs Docker:</p>
 						<img style="float:right" width="427px" data-src="images/docker-diagram.png" alt="docker diagram">
 						<li>Unlike VMs, Docker allows applications to <span style="color:#fff;">share the same Linux kernel as the system they're running on.</span></li>
-						<li>It then allocates different segments of hard disk space and CPU resources when each isolated environment or container is created.</li>
+						<li>It then allocates different segments of the hard disk, and CPU resources, when each isolated environment or container is created.</li>
 						
 					</ul>
 				</section>
@@ -306,22 +312,26 @@
 				</section>
 				<section>
 					<ul style="color:#5959ff;">
-						<li>As we can see, the <span style="color:#fff;">latest version of Elixir on Docker Hub is 1.7.4, which would be the version pulled</span> if we set the FROM line to latest, not 1.7.1 as is the case in our image.</li>
-						<li>Also to note is that some of the more lightweight container versions like <span style="color:#fff;">Alpine</span> will forgo utilities such as <span style="color:#fff;">Bash</span> and include only the bare essentials in order to keep the size to a minimum.</li>
+						<li>If we do a <span style="color:#9ea80f;">search for Elixir on Dockerhub,</span> we can see that the <span style="color:#fff;">latest version of Elixir on Docker Hub is 1.7.4.</span></li>
+						<li>This would be the version pulled if we set the FROM line to latest, not 1.7.1 as is the case in our image.</li>
 					</ul>
 				</section>
+				<section>
+						<ul style="color:#5959ff;">
+							<li>Also on a side note, it's good to keep in mind that some of the more lightweight container versions on Dockerhub with tags like <span style="color:#fff;">Alpine</span> will forgo utilities such as <span style="color:#fff;">Bash</span> and include only the bare essentials in order to keep the size to a minimum.</li>
+						</ul>
+					</section>
 				<section>
 					<ul style="color:#5959ff;">
 						<li>Other lines in this Dockerfile include installing<br />
-							<span style="color:#fff;">Elixir, Phoenix and React.</span></li>
-						<li>And dependencies required by these programs,<br />
-							<span style="color:#fff;">e.g. Node.</span></li>
+							<span style="color:#fff;">Phoenix, and Node for React.</span></li>
+						<li>The <span style="color:#fff;">apt-get</span> lines are responsible for installing Linux dependencies</li>
 					</ul>
 				</section>
 				<section>
 					<ul style="color:#5959ff;">
-						<li>They also includes lines responsible for the installation of Linux dependencies,</li>
-						<li>Creation of a working directory and cding into it,</li>
+						<span style="color:#fff;">It also includes lines responsible for:</span>
+						<li>The creation of a working directory and cding into it,</li>
 						<li>Exposing port 4000,</li>
 						<li>And finally a CMD or Entrypoint line.</li>
 					</ul>
@@ -330,7 +340,7 @@
 					<ul style="color:#5959ff;">
 						<p style="color:#9ea80f;">CMD ["mix", "phx.server"]</p>
 						<li>This final command here <span style="color:#fff;">tells Elixir's Mix utility to run a server.</span></li>
-						<li>Either a CMD or Entrypoint instruction is required as the last line of a Dockerfile.</li>
+						<li>Either a CMD or Entrypoint instruction is always required as the last line of a Dockerfile.</li>
 					</ul>
 				</section>
 				<section>
@@ -340,13 +350,14 @@
 				</section>
 				<section>
 					<ul style="color:#5959ff;">
-						<li>Before we build our container, we need to set up things like our databases.</li>
-						<li>And an important point to keep in mind while we<br />configure our files is that containers are <span style="color:#fff;">stateless.</span></li>
+						<li>Well, before we build our container, we need to set up things like our databases.</li>
+						<li>And an important point we'll be facing in a second<br />is that containers are <span style="color:#fff;">stateless.</span></li>
 					</ul>
 				</section>
 				<section>
 					<ul style="color:#5959ff;">
-						<li>This is why we will not be putting data directly<br />in our containers.</li> 
+						<li>Because of this, we need a place to put our data.</li>
+						<li>We will not be putting it directly in our containers.</li> 
 						<li>We'll see how data outside our container can <br />
 							be mapped into our container with the help<br />
 							of <span style="color:#fff;">volumes.</span></li>
@@ -399,10 +410,18 @@
 				</section>
 				<section>
 					<ul style="color:#5959ff;">
-						<li>Here we can see that the db service is created using <span style="color:#fff;">Postgres 10 as a base image.</span></li>
+						<li>In the next section we can see that the db service is created using <span style="color:#fff;">Postgres 10 as a base image.</span></li>
+						<li>Here, if we have concerns about securing confidential information we can use a secrets file.</li>
 						<li>And we can see the path to where the db data will be stored.</li>
 					</ul>
 				</section>
+				<section>
+						<ul style="color:#5959ff;">
+							<li>In essence, our Docker workflow should be:</li>
+							<li>To build a Dockerfile for each image we wish to create</li>
+							<li>And then to use Docker Compose to assemble the images using the build command.</li>
+						</ul>
+					</section>
 				<section>
 					<h3 style="color:#9ea80f;">
 						Creating and Running<br />our Containers
@@ -432,17 +451,10 @@
 					<ul style="color:#5959ff;">
 						<li>We can check our images now by running <span style="color:#9ea80f;"><br />
 							docker images,</span> and we will see our newly created image.</li>
-						<li>We can now finally build our containers by running <span style="color:#9ea80f;"><br />
-							docker-compose build.</span></li>
-					</ul>
-				</section>
-				<section>
-					<ul style="color:#5959ff;">
-						<li>Our app will require some Elixir, Postgres and Node setup. We'll run:<br />
-							<span style="color:#9ea80f;line-height:80px;">./mix deps.get</span><br />
-							<span style="color:#9ea80f;line-height:80px;">./mix ecto.create</span> and<br />
-							<span style="color:#9ea80f;line-height:80px;">cd src/assets && npm install</span>
-							<br /><span style="color:#ffcc00">***(why can't we include and auto run these in the Dockerfile? do some research)</span>
+						<li>Our app will also require some Elixir, Postgres and Node setup. We'll run:<br />
+							<span style="color:#9ea80f;">./mix deps.get</span><br />
+							<span style="color:#9ea80f;">./mix ecto.create</span> and<br />
+							<span style="color:#9ea80f;">cd src/assets && npm install</span>
 						</li>
 					</ul>
 				</section>
@@ -511,6 +523,11 @@
 						<li>Finally, as mentioned before, <span style="color:#fff;">Docker is open source.</span></li>
 						<li>This is important because continual contributions are being made to Docker that help improve the technology.</li>
 					</ul>
+				</section>
+				<section>
+					<h3 style="color:#9ea80f;">
+						Thank you!
+					</h3>
 				</section>
 			</div>
 
