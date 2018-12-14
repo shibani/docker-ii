@@ -107,7 +107,7 @@
 				<section>
 					<ul style="color:#5959ff;">
 						<li>Therefore, unlike VMs, Docker Containers <span style="color:#fff;">do not create an entire virtual operating system.</span></li>
-						<li>Since VMs need to boot a full OS, starting 100 VMs would take much longer than starting the same number of containers that can do this work in subsecond time.</li>
+						<li>Since VMs need to boot a full OS, starting, say 50 VMs would take much longer than starting the same number of containers that can do this work in subsecond time.</li>
 						<li>Docker accomplishes this by using <span style="color:#fff;">layers and caching,</span> which we will see more of a bit of later.</li>
 					</ul>
 				</section>
@@ -144,8 +144,8 @@
 				<section>
 					<ul style="color:#5959ff;">
 						<p style="color:#fff;">The Docker CLI Tool</p>
-						<li>When we download the Docker CE (Community Edition) package, we get a <span style="color:#fff;">CLI utility, called the Docker CLI</span></li>
-						<li>We can use this Docker CLI to build and run a Docker project.</li>
+						<li>When we download the Docker CE (Community Edition) package, we get a <span style="color:#fff;">CLI utility, called the Docker Client</span></li>
+						<li>We can use this Docker Client to build and run a Docker project.</li>
 					</ul>	
 				</section>
 				<section>
@@ -300,12 +300,13 @@
 					<ul style="color:#5959ff;">
 						<li><span style="color:#fff;">We can also use this process to create<br />
 							a container from our very own Dockerfile.</span></li>
-						<li>Here is a Dockerfile I used for an Elixir-Phoenix-React project</li>
-						<li>The first line in a Dockerfile is always the <span style="color:#fff;">FROM</span> instruction.</li>
+						<li>Here is a Dockerfile I used for an Elixir-Phoenix-React project.</li>
+						<li>We'll look at creating a container using this repo that I git cloned earlier.</li>
 					</ul>
 				</section>
 				<section>
 					<ul style="color:#5959ff;">
+						<li>The first line in a Dockerfile is always the <span style="color:#fff;">FROM</span> instruction.</li>
 						<li>This <span style="color:#fff;">FROM</span> instruction uses another Dockerfile as the <span style="color:#fff;">base instruction.</span></li>
 						<li>Note that I did not use the <span style="color:#fff;">Elixir:latest</span> base image. This was to avoid version changes and subsequent incompatibilities when creating containers in the future.</li>
 					</ul>
